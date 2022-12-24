@@ -1,0 +1,19 @@
+{
+	"name": "interlude",
+	"version": "1.0.0",
+	"description": "An app for organizing music",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mniebling/interlude.git"
+	},
+	"author": "Mike Niebling",
+	"license": "UNLICENSED",
+	"bugs": {
+		"url": "https://github.com/mniebling/interlude/issues"
+	},
+	"homepage": "https://github.com/mniebling/interlude#readme"
+}
