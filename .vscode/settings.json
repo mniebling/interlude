@@ -1,0 +1,8 @@
+{
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"javascript.format.semicolons": "remove",
+	"javascript.preferences.quoteStyle": "single",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true
+}
