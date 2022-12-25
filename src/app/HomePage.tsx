@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Album } from './Album'
+import { Album } from '../components/Album'
 
 export interface HomePageProps {
 	/** The Spotify API bearer token, will remove this from client components eventually */
