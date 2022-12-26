@@ -97,6 +97,8 @@ export default function HomePage(props: HomePageProps) {
 			<h1>Interlude</h1>
 			<div>An app to help organize and think about the music you listen to.</div>
 			<div>Currently supporting only Spotify, only albums, and writing data to local storage.</div>
+			<div>You can't edit catalogue entries yet.</div>
+			<div>To start over, type <code>localStorage.clear()</code> in the console.</div>
 			<br />
 			<label htmlFor='add-box'>Paste a Spotify album link:</label>
 			<input name='add-box' value={ url } style={{ width: '500px' }} onChange={ (e) => setUrl(e.target.value) } />
@@ -107,12 +109,12 @@ export default function HomePage(props: HomePageProps) {
 			{ album && (
 				<div>
 					<label>Tags (comma seperated):</label>
-					<input value={ tagString } onChange={ (e) => setTagString(e.target.value) } />
+					<input value={ tagString } style={{ width: '300px' }} onChange={ (e) => setTagString(e.target.value) } />
 					<div style={{ color: '#999' }}>{ parseTags(tagString).toString() }</div>
 
 					<div style={{ display: 'flex', marginTop: 10 }}>
 						<label>Notes:</label>
-						<textarea value={ notes } onChange={ (e) => setNotes(e.target.value) } />
+						<textarea style={{ height: 50, width: 300 }} value={ notes } onChange={ (e) => setNotes(e.target.value) } />
 					</div>
 
 					<button style={{ marginTop: 20 }} onClick={ () => addToCatalogue(album) }>Add to my catalogue</button>
@@ -120,21 +122,27 @@ export default function HomePage(props: HomePageProps) {
 			) }
 
 			{ catalogue && (
-				<>
+				<div style={{ marginBottom: 50 }}>
 					<hr />
 					<h2>My Catalogue</h2>
+
+					{ catalogue.size === 0 && (
+						<div>Your catalogue is empty. Find an album above, write some tags or notes and add it!</div>
+					) }
+
 					<ul>
 						{ Array.from(catalogue).map(([key, val]) => (
-							<li key={ key } style={{ marginBottom: 10 }}>
+							<li key={ key } style={{ marginBottom: 20 }}>
 								<div>
 									<span>{ val.data.artists[0].name } — { val.data.name }</span>
 									<button style={{ marginLeft: 5 }} onClick={ () => removeFromCatalogue(key) }>Remove</button>
 								</div>
 								<div style={{ color: '#999' }}>{ val.tags.toString() }</div>
+								<div style={{ color: '#555', fontSize: '0.9rem', marginTop: 10, maxWidth: 400 }}>{ val.notes }</div>
 							</li>
 						))}
 					</ul>
-				</>
+				</div>
 			) }
 		</>
 	)
