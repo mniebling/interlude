@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 export interface TagsProps {
 	tags: string[]
 }
@@ -9,10 +11,10 @@ export function Tags(props: TagsProps) {
 	return (
 		<div style={{ color: '#999' }}>
 			{ props.tags.map((tag, i) => (
-				<>
+				<Fragment key={ i }>
 					{ (i > 0) && <span style={{ marginRight: SEPARATOR_SPACING }}>•</span> }
-					<span key={ i } style={{ marginRight: SEPARATOR_SPACING }}>{ tag }</span>
-				</>
+					<span style={{ marginRight: SEPARATOR_SPACING }}>{ tag }</span>
+				</Fragment>
 			))}
 		</div>
 	)
