@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { getLocalCatalogue, writeLocalCatalogue } from '../common/local-storage'
 import { parseAlbumUrl } from '../common/spotify-uri'
 import { Album } from '../components/Album'
+import { Tags } from '../components/Tags'
 
 export interface HomePageProps {
 	/** The Spotify API bearer token, will remove this from client components eventually */
@@ -110,7 +111,7 @@ export default function HomePage(props: HomePageProps) {
 				<div>
 					<label>Tags (comma seperated):</label>
 					<input value={ tagString } style={{ width: '300px' }} onChange={ (e) => setTagString(e.target.value) } />
-					<div style={{ color: '#999' }}>{ parseTags(tagString).toString() }</div>
+					<Tags tags={ parseTags(tagString) } />
 
 					<div style={{ display: 'flex', marginTop: 10 }}>
 						<label>Notes:</label>
@@ -137,7 +138,7 @@ export default function HomePage(props: HomePageProps) {
 									<span>{ val.data.artists[0].name } — { val.data.name }</span>
 									<button style={{ marginLeft: 5 }} onClick={ () => removeFromCatalogue(key) }>Remove</button>
 								</div>
-								<div style={{ color: '#999' }}>{ val.tags.toString() }</div>
+								<Tags tags={ val.tags } />
 								<div style={{ color: '#555', fontSize: '0.9rem', marginTop: 10, maxWidth: 400 }}>{ val.notes }</div>
 							</li>
 						))}
