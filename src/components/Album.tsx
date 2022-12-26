@@ -1,4 +1,4 @@
-import { Artists } from "./Artists"
+import { Artists } from './Artists'
 
 export interface AlbumProps {
 	album: Spotify.Album
