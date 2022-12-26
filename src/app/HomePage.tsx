@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { getLocalCatalogue, writeLocalCatalogue } from '../common/local-storage'
 import { Album } from '../components/Album'
 
 export interface HomePageProps {
@@ -11,16 +12,13 @@ export interface HomePageProps {
 export default function HomePage(props: HomePageProps) {
 
 	const [album, setAlbum] = useState<Spotify.Album>()
-	const [catalogue, setCatalogue] = useState<Map<string, Interlude.CatalogueItem>>()
+	const [catalogue, setCatalogue] = useState<Interlude.Catalogue>()
 	const [notes, setNotes] = useState<string>('')
 	const [tagString, setTagString] = useState<string>('')
 	const [url, setUrl] = useState<string>('')
 
 	useEffect(() => {
-		const json = JSON.parse(localStorage.getItem('catalogue_v1') || '{}')
-		const catalogue = new Map<string, Interlude.CatalogueItem>(Object.entries(json))
-		console.info('initialize', catalogue)
-		setCatalogue(catalogue)
+		setCatalogue(getLocalCatalogue()) // eventually, get this from server component
 	}, [])
 
 	async function getInfoForUri(uri: string) {
@@ -54,7 +52,7 @@ export default function HomePage(props: HomePageProps) {
 		return input.split(',').map(tag => tag.trim())
 	}
 
-	function addToCatalogue() {
+	function addToCatalogue(album: Spotify.Album) {
 
 		if (!album) return console.error(`Can't add, no album is selected somehow`)
 		if (!catalogue) return console.error(`Catalogue wasn't initialized from localStorage correctly`)
@@ -79,14 +77,8 @@ export default function HomePage(props: HomePageProps) {
 
 		if (catalogue.get(album.id)) return console.error(`Already in the catalogue, update is TODO`)
 
+		writeLocalCatalogue(catalogue)
 		setCatalogue(new Map(catalogue.set(album.id, interludeItem)))
-
-		localStorage.setItem(
-			'catalogue_v1',
-			JSON.stringify(Object.fromEntries(catalogue.entries())),
-		)
-
-		console.log('added!', JSON.parse(localStorage.getItem('catalogue_v1') || '{}'))
 	}
 
 	return (
@@ -111,7 +103,7 @@ export default function HomePage(props: HomePageProps) {
 						<textarea value={ notes } onChange={ (e) => setNotes(e.target.value) } />
 					</div>
 
-					<button style={{ marginTop: 20 }} onClick={ addToCatalogue }>Add to my catalogue</button>
+					<button style={{ marginTop: 20 }} onClick={ () => addToCatalogue(album) }>Add to my catalogue</button>
 				</div>
 			) }
 

@@ -16,4 +16,6 @@ declare namespace Interlude {
 		tags: string[]
 		type: 'album'
 	}
+
+	type Catalogue = Map<string, CatalogueItem>
 }
