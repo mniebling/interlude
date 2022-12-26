@@ -98,7 +98,7 @@ export default function HomePage(props: HomePageProps) {
 			<div>An app to help organize and think about the music you listen to.</div>
 			<div>Currently supporting only Spotify, only albums, and writing data to local storage.</div>
 			<div>You can't edit catalogue entries yet.</div>
-			<div>To start over, type <code>localStorage.clear()</code> in the console.</div>
+			<div>To start over, type <code>localStorage.clear()</code> in the console and then refresh.</div>
 			<br />
 			<label htmlFor='add-box'>Paste a Spotify album link:</label>
 			<input name='add-box' value={ url } style={{ width: '500px' }} onChange={ (e) => setUrl(e.target.value) } />
