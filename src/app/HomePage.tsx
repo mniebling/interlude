@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { getLocalCatalogue, writeLocalCatalogue } from '../common/local-storage'
+import { parseAlbumUrl } from '../common/spotify-uri'
 import { Album } from '../components/Album'
 
 export interface HomePageProps {
@@ -21,16 +22,12 @@ export default function HomePage(props: HomePageProps) {
 		setCatalogue(getLocalCatalogue()) // eventually, get this from server component
 	}, [])
 
-	async function getInfoForUri(uri: string) {
+	async function getSpotifyInfo(input: string) {
 
-		if (!uri.includes('spotify:')) return console.error(`spotify uris are separated by :, did you use a url instead?`)
-		if (!uri.includes('album') || !uri.includes('spotify')) return console.error(`That's not a spotify album uri!`)
-
-		const id = uri.split(':')[2]
-		console.info(id)
+		const { id } = parseAlbumUrl(input)
 
 		if (!id) {
-			return console.error(uri)
+			return console.error(input)
 		}
 
 		// Move this into server components
@@ -44,6 +41,7 @@ export default function HomePage(props: HomePageProps) {
 		const album = await response.json() as Spotify.Album // there must be a better way, what's Ky do?
 		setAlbum(album)
 
+		setUrl('')
 		setNotes('')
 		setTagString('')
 	}
@@ -85,10 +83,11 @@ export default function HomePage(props: HomePageProps) {
 		<>
 			<h1>Interlude</h1>
 			<div>An app to help organize and think about the music you listen to.</div>
+			<div>Currently supporting only Spotify, only albums, and writing data to local storage.</div>
 			<br />
-			<label htmlFor='add-box'>Paste a Spotify album uri (opt-click Share):</label>
+			<label htmlFor='add-box'>Paste a Spotify album link:</label>
 			<input name='add-box' value={ url } style={{ width: '500px' }} onChange={ (e) => setUrl(e.target.value) } />
-			<button onClick={ () => getInfoForUri(url) }>Get its info</button>
+			<button onClick={ () => getSpotifyInfo(url) }>Get its info</button>
 
 			{ album && <Album album={ album } /> }
 
