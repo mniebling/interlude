@@ -19,7 +19,7 @@ export default function HomePage(props: HomePageProps) {
 	const [url, setUrl] = useState<string>('')
 
 	useEffect(() => {
-		setCatalogue(getLocalCatalogue()) // eventually, get this from server component
+		setCatalogue(getLocalCatalogue())
 	}, [])
 
 	async function getSpotifyInfo(input: string) {
@@ -53,7 +53,7 @@ export default function HomePage(props: HomePageProps) {
 	function addToCatalogue(album: Spotify.Album) {
 
 		if (!album) return console.error(`Can't add, no album is selected somehow`)
-		if (!catalogue) return console.error(`Catalogue wasn't initialized from localStorage correctly`)
+		if (!catalogue) return console.error(`Catalogue was not initialized correctly`)
 
 		const interludeItem: Interlude.CatalogueItem = {
 			addedOn: new Date().toISOString(),
@@ -77,6 +77,19 @@ export default function HomePage(props: HomePageProps) {
 
 		writeLocalCatalogue(catalogue)
 		setCatalogue(new Map(catalogue.set(album.id, interludeItem)))
+	}
+
+	function removeFromCatalogue(key: string) {
+
+		if (!catalogue) return console.error(`Catalogue was not initialized correctly`)
+
+		if (catalogue.delete(key)) {
+			setCatalogue(new Map(catalogue))
+			writeLocalCatalogue(catalogue)
+			return
+		}
+
+		console.error(`Can't remove ${key}, it's not in the catalogue`)
 	}
 
 	return (
@@ -113,7 +126,10 @@ export default function HomePage(props: HomePageProps) {
 					<ul>
 						{ Array.from(catalogue).map(([key, val]) => (
 							<li key={ key } style={{ marginBottom: 10 }}>
-								<div>{ val.data.artists[0].name } — { val.data.name }</div>
+								<div>
+									<span>{ val.data.artists[0].name } — { val.data.name }</span>
+									<button style={{ marginLeft: 5 }} onClick={ () => removeFromCatalogue(key) }>Remove</button>
+								</div>
 								<div style={{ color: '#999' }}>{ val.tags.toString() }</div>
 							</li>
 						))}
