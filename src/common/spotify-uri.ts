@@ -1,6 +1,6 @@
 export function parseAlbumUrl(input: string) {
 
-	if (!input.includes('spotify')) throw new Error(`${input} is not a spotify link`)
+	if (!input.includes('spotify')) throw new Error(`"${input}" is not a spotify link`)
 	if (!input.includes('album')) throw new Error(`That's not a spotify album link!`)
 
 	let parts = input.split(':')
