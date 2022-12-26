@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react'
 import { getLocalCatalogue, writeLocalCatalogue } from '../common/local-storage'
 import { parseAlbumUrl } from '../common/spotify-uri'
-import { Album } from '../components/Album'
-import { Tags } from '../components/Tags'
+import { Album, Artists, Tags } from '../components'
 
 export interface HomePageProps {
 	/** The Spotify API bearer token, will remove this from client components eventually */
@@ -135,7 +134,7 @@ export default function HomePage(props: HomePageProps) {
 						{ Array.from(catalogue).map(([key, val]) => (
 							<li key={ key } style={{ marginBottom: 20 }}>
 								<div>
-									<span>{ val.data.artists[0].name } — { val.data.name }</span>
+									<span><Artists artists={ val.data.artists } /> — { val.data.name }</span>
 									<button style={{ marginLeft: 5 }} onClick={ () => removeFromCatalogue(key) }>Remove</button>
 								</div>
 								<Tags tags={ val.tags } />

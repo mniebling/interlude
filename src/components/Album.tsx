@@ -1,3 +1,5 @@
+import { Artists } from "./Artists"
+
 export interface AlbumProps {
 	album: Spotify.Album
 }
@@ -12,7 +14,7 @@ export function Album(props: AlbumProps) {
 					<img src={ props.album.images[2].url } />
 				</div>
 				<div>
-					<div><strong>{ props.album.artists[0].name }</strong></div>
+					<div><strong><Artists artists={ props.album.artists } /></strong></div>
 					<div>{ props.album.name }</div>
 					<div style={{ color: '#999', marginTop: 5 }}><em>{ props.album.release_date }</em></div>
 				</div>
