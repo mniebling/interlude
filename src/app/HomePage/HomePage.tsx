@@ -47,7 +47,7 @@ export default function HomePage(props: HomePageProps) {
 		<>
 			<Header />
 
-			{ catalogue && (
+			{ catalogue && catalogue.size > 0 && (
 				<div style={{ marginBottom: 50, padding: 10 }}>
 					<h2>My Catalogue <button onClick={ () => setShowNewEntry(true) }>Add an entry</button></h2>
 
