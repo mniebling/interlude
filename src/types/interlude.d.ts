@@ -1,6 +1,6 @@
 declare namespace Interlude {
 
-	interface CatalogueItem {
+	interface CatalogueEntry {
 		/** ISO format */
 		addedOn: string
 		data: {
@@ -17,5 +17,5 @@ declare namespace Interlude {
 		type: 'album'
 	}
 
-	type Catalogue = Map<string, CatalogueItem>
+	type Catalogue = Map<string, CatalogueEntry>
 }

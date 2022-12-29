@@ -7,7 +7,7 @@ export interface AlbumProps {
 export function Album(props: AlbumProps) {
 
 	return (
-		<div style={{ marginTop: 50 }}>
+		<div style={{ margin: '25px 0 10px 0' }}>
 			<div style={{ display: 'flex' }}>
 				<div style={{ marginRight: 10 }}>
 					{/* hardcode to images[2] which seems to be 64×64 */}

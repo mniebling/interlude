@@ -1,4 +1,4 @@
-import HomePage from './HomePage'
+import HomePage from './HomePage/HomePage'
 
 // Eventually move this auth logic into a server component that can be re-used
 // Set up api routes that proxy to Spotify's api so the client components don't care about this
