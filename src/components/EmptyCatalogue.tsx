@@ -1,4 +1,4 @@
-import { NewEntry } from '../../components'
+import { NewEntry } from '.'
 
 export interface EmptyCatalogueProps {
 	token: string

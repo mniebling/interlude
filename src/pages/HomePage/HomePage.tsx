@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react'
-import { getLocalCatalogue, writeLocalCatalogue } from '../../common/local-storage'
-import { Artists, NewEntry, Tags } from '../../components'
-import { EmptyCatalogue } from './EmptyCatalogue'
-import { Footer } from './Footer'
-import { Header } from './Header'
-import { CatalogueContext } from '../../common/catalogue-context'
+import { CatalogueContext, getLocalCatalogue, writeLocalCatalogue } from '../../common'
+import { Artists, EmptyCatalogue, Footer, Header, NewEntry, Tags } from '../../components'
 
 export interface HomePageProps {
 	/** The Spotify API bearer token, will remove this from client components eventually */
