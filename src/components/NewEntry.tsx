@@ -1,10 +1,10 @@
 import { useState } from 'react'
+import { useCatalogueContext } from '../common/catalogue-context'
 import { parseAlbumUrl } from '../common/spotify-uri'
 import { Album } from './Album'
 import { Tags } from './Tags'
 
 export interface NewEntryProps {
-	onAdd: (entry: Interlude.CatalogueEntry) => void
 	token: string // definitely fix this nonsense later
 }
 
@@ -14,6 +14,8 @@ export function NewEntry(props: NewEntryProps) {
 	const [notes, setNotes] = useState<string>('')
 	const [tagString, setTagString] = useState<string>('')
 	const [url, setUrl] = useState<string>('')
+
+	const { addToCatalogue } = useCatalogueContext()
 
 	function addEntry() {
 
@@ -35,7 +37,7 @@ export function NewEntry(props: NewEntryProps) {
 			type: 'album',
 		}
 
-		props.onAdd(entry)
+		addToCatalogue(entry)
 	}
 
 	function parseTags(input: string) {

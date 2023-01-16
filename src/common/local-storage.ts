@@ -1,5 +1,6 @@
-const LOCAL_STORAGE_KEY = 'catalogue_v1'
+'use client'
 
+const LOCAL_STORAGE_KEY = 'catalogue_v1'
 
 export function getLocalCatalogue(): Interlude.Catalogue {
 

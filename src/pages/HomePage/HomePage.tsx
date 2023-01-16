@@ -1,10 +1,10 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { getLocalCatalogue, writeLocalCatalogue } from '../../common/local-storage'
 import { Artists, NewEntry, Tags } from '../../components'
+import { EmptyCatalogue } from './EmptyCatalogue'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { CatalogueContext } from '../../common/catalogue-context'
 
 export interface HomePageProps {
 	/** The Spotify API bearer token, will remove this from client components eventually */
@@ -13,7 +13,7 @@ export interface HomePageProps {
 
 export default function HomePage(props: HomePageProps) {
 
-	const [catalogue, setCatalogue] = useState<Interlude.Catalogue>()
+	const [catalogue, setCatalogue] = useState<Interlude.Catalogue | null>(null)
 	const [showNewEntry, setShowNewEntry] = useState<boolean>(false)
 
 	useEffect(() => {
@@ -21,6 +21,8 @@ export default function HomePage(props: HomePageProps) {
 	}, [])
 
 	function addToCatalogue(entry: Interlude.CatalogueEntry) {
+
+		console.info('Add to catalogue', entry)
 
 		if (!catalogue) return console.error(`Catalogue was not initialized correctly`)
 		if (catalogue.get(entry.data.id)) return console.error(`Already in the catalogue, update is TODO`)
@@ -32,9 +34,12 @@ export default function HomePage(props: HomePageProps) {
 
 	function removeFromCatalogue(key: string) {
 
+		console.info('Remove from catalogue', key)
+
 		if (!catalogue) return console.error(`Catalogue was not initialized correctly`)
 
 		if (catalogue.delete(key)) {
+			console.info('deleted', key)
 			setCatalogue(new Map(catalogue))
 			writeLocalCatalogue(catalogue)
 			return
@@ -44,14 +49,14 @@ export default function HomePage(props: HomePageProps) {
 	}
 
 	return (
-		<>
+		<CatalogueContext.Provider value={{ catalogue, addToCatalogue, removeFromCatalogue }}>
 			<Header />
 
 			{ catalogue && catalogue.size > 0 && (
 				<div style={{ marginBottom: 50, padding: 10 }}>
 					<h2>My Catalogue <button onClick={ () => setShowNewEntry(true) }>Add an entry</button></h2>
 
-					{ showNewEntry && <NewEntry token={ props.token } onAdd={ (entry) => addToCatalogue(entry) } /> }
+					{ showNewEntry && <NewEntry token={ props.token } /> }
 
 					<ul>
 						{ Array.from(catalogue).map(([key, val]) => (
@@ -68,16 +73,9 @@ export default function HomePage(props: HomePageProps) {
 				</div>
 			) }
 
-			{ catalogue?.size === 0 && (
-				<div style={{ padding: 10 }}>
-					<div>Interlude is an app to help organize and think about the music you listen to.</div>
-					<div style={{ marginBottom: 20 }}>Right now, your catalogue is empty. Find an album, write some tags or notes and add it!</div>
-
-					<NewEntry token={ props.token } onAdd={ (entry) => addToCatalogue(entry) } />
-				</div>
-			) }
+			{ catalogue?.size === 0 && <EmptyCatalogue token={ props.token } /> }
 
 			<Footer />
-		</>
+		</CatalogueContext.Provider>
 	)
 }
