@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import HomePage from '../pages/HomePage/HomePage'
-import { SpotifyTokenResult } from './api/spotify-token'
+import HomePage from '../app/HomePage/HomePage'
+import { SpotifyTokenResult } from './spotify-token'
 
 
 export default function Index() {

@@ -1,0 +1,13 @@
+## more info on configuring this file: https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+	command = "npm run build"
+	publish = "dist"
+
+[dev]
+	command = "vite" # Command to start your dev server
+	targetPort = 5173 # Port that the dev server will be listening on
+	publish = "dist" # Folder with the static content for _redirect file
+
+[functions]
+	directory = "src/api"
