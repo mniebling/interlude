@@ -19,4 +19,9 @@ export default defineConfig(({ command, mode }) => ({
 	server: {
 		hmr: false,
 	},
+	test: {
+		include: [
+			'../**/*.test.ts',
+		],
+	},
 }))
