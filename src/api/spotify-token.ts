@@ -35,7 +35,10 @@ export default async (request: Request) => {
 
 	if (!tokenResponse.ok) {
 		return new Response(
-			JSON.stringify({ message: `Server error fetching Spotify auth token.` }),
+			JSON.stringify({
+				message: `Server error fetching Spotify auth token.`,
+				error: await tokenResponse.json(),
+			}),
 			{ status: 500 },
 		)
 	}
