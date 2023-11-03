@@ -10,4 +10,4 @@
 	publish = "dist" # Folder with the static content for _redirect file
 
 [functions]
-	directory = "src/api"
+	directory = "api"

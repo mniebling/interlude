@@ -1,6 +1,0 @@
-{
-	"editor.detectIndentation": false,
-	"editor.insertSpaces": false,
-	"javascript.format.semicolons": "remove",
-	"javascript.preferences.quoteStyle": "single",
-}

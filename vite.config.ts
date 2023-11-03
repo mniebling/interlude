@@ -4,9 +4,7 @@ import { defineConfig } from 'vite'
 
 
 export default defineConfig(({ command, mode }) => ({
-	build: {
-		outDir: '../../dist', // this is relative to root
-	},
+	outDir: '../dist', // this is relative to root
 	plugins: [
 		react(),
 	],
@@ -15,13 +13,11 @@ export default defineConfig(({ command, mode }) => ({
 			'@': resolve('./src'),
 		},
 	},
-	root: './src/app',
+	root: './app',
 	server: {
 		hmr: false,
 	},
 	test: {
-		include: [
-			'../**/*.test.ts',
-		],
+		root: './', // in order to run api tests too and also because of https://github.com/vitest-dev/vitest/issues/3272
 	},
 }))
