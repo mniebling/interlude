@@ -1,19 +1,17 @@
 // import { CatalogueContext, getLocalCatalogue, writeLocalCatalogue } from '../../common'
 // import { Artists, EmptyCatalogue, Footer, Header, NewEntry, Tags } from '../../components'
-
 import { Fragment, useEffect, useState } from 'react'
+import { SpotifyTokenResult } from '@/api/spotify-token'
 
-// export interface HomePageProps {
-// 	/** The Spotify API bearer token, will remove this from client components eventually */
-// 	token: string
-// }
 
 export function HomePage() {
 
+	const [authToken, setAuthToken] = useState<string | null>(null)
 	const [status, setStatus] = useState<boolean | undefined>()
 
 	useEffect(() => {
 		getStatus().then(setStatus)
+		getAuthToken().then(setAuthToken)
 	}, [])
 
 	async function getStatus() {
@@ -23,10 +21,24 @@ export function HomePage() {
 		return response.ok
 	}
 
+	async function getAuthToken() {
+
+		const response = await fetch('/api/spotify-token')
+
+		if (!response.ok) {
+			console.error(`Auth request failed`)
+		}
+
+		const result = await response.json() as SpotifyTokenResult
+		return result.token
+	}
+
+
 	return (
 		<Fragment>
 			<h1>Interlude</h1>
-			<p>Fetching status... { (status || '').toString() }</p>
+			<p>Api online: { (status || '').toString() }</p>
+			<p>Auth token: { authToken }</p>
 		</Fragment>
 	)
 

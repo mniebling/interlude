@@ -13,11 +13,9 @@
 		"module": "esnext",
 		"moduleResolution": "node",
 		"noEmit": true,
-		"plugins": [
-			{
-				"name": "next"
-			}
-		],
+		"paths": {
+			"@/*": ["./src/*"]
+		},
 		"resolveJsonModule": true,
 		"strict": true,
 		"target": "es2015",
@@ -28,8 +26,6 @@
 		"node_modules"
 	],
 	"include": [
-		"next-env.d.ts",
-		".next/types/**/*.ts",
 		"**/*.ts",
 		"**/*.tsx"
 	]
