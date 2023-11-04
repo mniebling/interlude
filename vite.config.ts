@@ -18,6 +18,9 @@ export default defineConfig(({ command, mode }) => ({
 		hmr: false,
 	},
 	test: {
-		root: './', // in order to run api tests too and also because of https://github.com/vitest-dev/vitest/issues/3272
+		cache: {
+			dir: '../node_modules/.vitest', // https://github.com/vitest-dev/vitest/issues/3272
+		},
+		root: './', // in order to run api tests too
 	},
 }))
