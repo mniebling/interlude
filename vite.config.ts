@@ -4,7 +4,9 @@ import { defineConfig } from 'vite'
 
 
 export default defineConfig(({ command, mode }) => ({
-	outDir: '../dist', // this is relative to root
+	build: {
+		outDir: '../dist', // this is relative to root
+	},
 	plugins: [
 		react(),
 	],

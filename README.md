@@ -13,4 +13,4 @@ To run locally:
 2. Install packages: `npm ci`
 3. Run the dev server: `npm start`
 
-Netlify's CLI will serve the edge functions in `/src/api` in development mode.
+Netlify's CLI will serve the edge functions in `/api` in development mode.
