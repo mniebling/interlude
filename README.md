@@ -2,6 +2,8 @@
 
 An app for organizing music
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4cebcf50-eb5b-4838-b867-75bbb7e9f87b/deploy-status)](https://app.netlify.com/sites/interlude-music/deploys)
+
 ### Development
 
 You need a `.env.local` file with the Spotify client secret in it.
