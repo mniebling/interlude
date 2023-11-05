@@ -10,6 +10,11 @@ export default defineConfig(({ command, mode }) => ({
 	plugins: [
 		react(),
 	],
+	resolve: {
+		alias: {
+			'@': resolve('./'),
+		},
+	},
 	root: './app',
 	server: {
 		hmr: false,
