@@ -6,8 +6,6 @@ export function getLocalCatalog(): Interlude.Catalog {
 	const json = JSON.parse(localStorage.getItem('Catalog_v1') || '{}')
 	const catalog = new Map<string, Interlude.CatalogEntry>(Object.entries(json))
 
-	console.log(catalog)
-
 	return catalog
 }
 
