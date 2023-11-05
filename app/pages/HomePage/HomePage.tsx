@@ -2,23 +2,16 @@
 // import { Artists, EmptyCatalog, Footer, Header, NewEntry, Tags } from '../../components'
 import { Fragment, useEffect, useState } from 'react'
 import { SpotifyTokenResult } from '@/api/spotify-token'
+import { EmptyCatalog } from '@/app/components/EmptyCatalogue'
 
 
 export function HomePage() {
 
 	const [authToken, setAuthToken] = useState<string | null>(null)
-	const [status, setStatus] = useState<boolean | undefined>()
 
 	useEffect(() => {
-		getStatus().then(setStatus)
 		getAuthToken().then(setAuthToken)
 	}, [])
-
-	async function getStatus() {
-
-		const response = await fetch('/api/status')
-		return response.ok
-	}
 
 	async function getAuthToken() {
 
@@ -27,16 +20,19 @@ export function HomePage() {
 		return result.token
 	}
 
+	if (!authToken) return null
 
 	return (
 		<Fragment>
 			<h1>Interlude</h1>
 			<p>Api online: { (status || '').toString() }</p>
 			<p>Auth token: { authToken }</p>
+
+			<EmptyCatalog token={ authToken } />
 		</Fragment>
 	)
 
-	// const [Catalog, setCatalog] = useState<Interlude.Catalog | null>(null)
+	// const [catalog, setCatalog] = useState<Interlude.Catalog | null>(null)
 	// const [showNewEntry, setShowNewEntry] = useState<boolean>(false)
 
 	// useEffect(() => {
