@@ -23,6 +23,8 @@ export default defineConfig(({ command, mode }) => ({
 		cache: {
 			dir: '../node_modules/.vitest', // https://github.com/vitest-dev/vitest/issues/3272
 		},
-		root: './', // in order to run api tests too
+		include: [
+			'../**/*.test.ts', // we want to run tests in /api which is not in the root
+		],
 	},
 }))
