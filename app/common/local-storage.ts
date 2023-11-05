@@ -1,19 +1,19 @@
 'use client'
 
-const LOCAL_STORAGE_KEY = 'catalogue_v1'
+const LOCAL_STORAGE_KEY = 'Catalog_v1'
 
-export function getLocalCatalogue(): Interlude.Catalogue {
+export function getLocalCatalog(): Interlude.Catalog {
 
-	// If there's no catalogue yet, create a blank one
-	const json = JSON.parse(localStorage.getItem('catalogue_v1') || '{}')
-	const catalogue = new Map<string, Interlude.CatalogueEntry>(Object.entries(json))
+	// If there's no Catalog yet, create a blank one
+	const json = JSON.parse(localStorage.getItem('Catalog_v1') || '{}')
+	const Catalog = new Map<string, Interlude.CatalogEntry>(Object.entries(json))
 
-	return catalogue
+	return Catalog
 }
 
-export function writeLocalCatalogue(catalogue: Interlude.Catalogue) {
+export function writeLocalCatalog(Catalog: Interlude.Catalog) {
 
-	const stringified = JSON.stringify(Object.fromEntries(catalogue.entries()))
+	const stringified = JSON.stringify(Object.fromEntries(Catalog.entries()))
 
 	localStorage.setItem(LOCAL_STORAGE_KEY, stringified)
 }

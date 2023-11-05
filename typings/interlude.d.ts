@@ -1,6 +1,6 @@
 declare namespace Interlude {
 
-	interface CatalogueEntry {
+	interface CatalogEntry {
 		/** ISO format */
 		addedOn: string
 		data: {
@@ -17,7 +17,7 @@ declare namespace Interlude {
 		type: 'album'
 	}
 
-	type Catalogue = Map<string, CatalogueEntry>
+	type Catalog = Map<string, CatalogEntry>
 
 	// API types
 	interface ApiError {
@@ -26,8 +26,8 @@ declare namespace Interlude {
 
 	export namespace Events {
 
-		type AddToCatalogue = CustomEvent<{
-			entry: Interlude.CatalogueEntry
+		type AddToCatalog = CustomEvent<{
+			entry: Interlude.CatalogEntry
 		}>
 	}
 }

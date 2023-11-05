@@ -2,6 +2,6 @@ export {}
 
 declare global {
 	interface WindowEventMap {
-		'interlude:addToCatalogue': Interlude.Events.AddToCatalogue
+		'interlude:addToCatalog': Interlude.Events.AddToCatalog
 	}
 }

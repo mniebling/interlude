@@ -1,5 +1,5 @@
-// import { CatalogueContext, getLocalCatalogue, writeLocalCatalogue } from '../../common'
-// import { Artists, EmptyCatalogue, Footer, Header, NewEntry, Tags } from '../../components'
+// import { CatalogContext, getLocalCatalog, writeLocalCatalog } from '../../common'
+// import { Artists, EmptyCatalog, Footer, Header, NewEntry, Tags } from '../../components'
 import { Fragment, useEffect, useState } from 'react'
 import { SpotifyTokenResult } from '@/api/spotify-token'
 
@@ -36,57 +36,57 @@ export function HomePage() {
 		</Fragment>
 	)
 
-	// const [catalogue, setCatalogue] = useState<Interlude.Catalogue | null>(null)
+	// const [Catalog, setCatalog] = useState<Interlude.Catalog | null>(null)
 	// const [showNewEntry, setShowNewEntry] = useState<boolean>(false)
 
 	// useEffect(() => {
-		// setCatalogue(getLocalCatalogue())
+		// setCatalog(getLocalCatalog())
 	// }, [])
 
-	// function addToCatalogue(entry: Interlude.CatalogueEntry) {
+	// function addToCatalog(entry: Interlude.CatalogEntry) {
 
-	// 	console.info('Add to catalogue', entry)
+	// 	console.info('Add to Catalog', entry)
 
-	// 	if (!catalogue) return console.error(`Catalogue was not initialized correctly`)
-	// 	if (catalogue.get(entry.data.id)) return console.error(`Already in the catalogue, update is TODO`)
+	// 	if (!Catalog) return console.error(`Catalog was not initialized correctly`)
+	// 	if (Catalog.get(entry.data.id)) return console.error(`Already in the Catalog, update is TODO`)
 
 	// 	setShowNewEntry(false)
-	// 	setCatalogue(new Map(catalogue.set(entry.data.id, entry)))
-	// 	writeLocalCatalogue(catalogue)
+	// 	setCatalog(new Map(Catalog.set(entry.data.id, entry)))
+	// 	writeLocalCatalog(Catalog)
 	// }
 
-	// function removeFromCatalogue(key: string) {
+	// function removeFromCatalog(key: string) {
 
-	// 	console.info('Remove from catalogue', key)
+	// 	console.info('Remove from Catalog', key)
 
-	// 	if (!catalogue) return console.error(`Catalogue was not initialized correctly`)
+	// 	if (!Catalog) return console.error(`Catalog was not initialized correctly`)
 
-	// 	if (catalogue.delete(key)) {
+	// 	if (Catalog.delete(key)) {
 	// 		console.info('deleted', key)
-	// 		setCatalogue(new Map(catalogue))
-	// 		writeLocalCatalogue(catalogue)
+	// 		setCatalog(new Map(Catalog))
+	// 		writeLocalCatalog(Catalog)
 	// 		return
 	// 	}
 
-	// 	console.error(`Can't remove ${key}, it's not in the catalogue`)
+	// 	console.error(`Can't remove ${key}, it's not in the Catalog`)
 	// }
 
 	// return (
-	// 	<CatalogueContext.Provider value={{ catalogue, addToCatalogue, removeFromCatalogue }}>
+	// 	<CatalogContext.Provider value={{ Catalog, addToCatalog, removeFromCatalog }}>
 	// 		<Header />
 
-	// 		{ catalogue && catalogue.size > 0 && (
+	// 		{ Catalog && Catalog.size > 0 && (
 	// 			<div style={{ marginBottom: 50, padding: 10 }}>
-	// 				<h2>My Catalogue <button onClick={ () => setShowNewEntry(true) }>Add an entry</button></h2>
+	// 				<h2>My Catalog <button onClick={ () => setShowNewEntry(true) }>Add an entry</button></h2>
 
 	// 				{ showNewEntry && <NewEntry token={ props.token } /> }
 
 	// 				<ul>
-	// 					{ Array.from(catalogue).map(([key, val]) => (
+	// 					{ Array.from(Catalog).map(([key, val]) => (
 	// 						<li key={ key } style={{ marginBottom: 20 }}>
 	// 							<div>
 	// 								<span><Artists artists={ val.data.artists } /> — { val.data.name }</span>
-	// 								<button style={{ marginLeft: 5 }} onClick={ () => removeFromCatalogue(key) }>Remove</button>
+	// 								<button style={{ marginLeft: 5 }} onClick={ () => removeFromCatalog(key) }>Remove</button>
 	// 							</div>
 	// 							<Tags tags={ val.tags } />
 	// 							<div style={{ color: '#555', fontSize: '0.9rem', marginTop: 10, maxWidth: 400 }}>{ val.notes }</div>
@@ -96,9 +96,9 @@ export function HomePage() {
 	// 			</div>
 	// 		) }
 
-	// 		{ catalogue?.size === 0 && <EmptyCatalogue token={ props.token } /> }
+	// 		{ Catalog?.size === 0 && <EmptyCatalog token={ props.token } /> }
 
 	// 		<Footer />
-	// 	</CatalogueContext.Provider>
+	// 	</CatalogContext.Provider>
 	// )
 }

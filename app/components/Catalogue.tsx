@@ -1,10 +1,10 @@
-export interface CatalogueProps {
-	catalogue: Interlude.Catalogue
+export interface CatalogProps {
+	Catalog: Interlude.Catalog
 }
 
-export function Catalogue(props: CatalogueProps) {
+export function Catalog(props: CatalogProps) {
 
 	return (
-		<div>Catalogue</div>
+		<div>Catalog</div>
 	)
 }

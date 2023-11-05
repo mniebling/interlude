@@ -1,17 +1,17 @@
 import { createContext, useContext } from 'react'
 
-export interface CatalogueContextObject {
-	catalogue: Interlude.Catalogue | null
-	addToCatalogue: (entry: Interlude.CatalogueEntry) => void
-	removeFromCatalogue: (key: string) => void
+export interface CatalogContextObject {
+	Catalog: Interlude.Catalog | null
+	addToCatalog: (entry: Interlude.CatalogEntry) => void
+	removeFromCatalog: (key: string) => void
 }
 
-export const CatalogueContext = createContext<CatalogueContextObject | null>(null)
+export const CatalogContext = createContext<CatalogContextObject | null>(null)
 
-export function useCatalogueContext(): CatalogueContextObject {
+export function useCatalogContext(): CatalogContextObject {
 
-	const ctx = useContext(CatalogueContext)
-	if (!ctx) throw new Error('Catalogue is undefined in the context.')
+	const ctx = useContext(CatalogContext)
+	if (!ctx) throw new Error('Catalog is undefined in the context.')
 
 	return ctx
 }

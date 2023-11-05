@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useCatalogueContext } from '../common/catalogue-context'
+import { useCatalogContext } from '../common/Catalog-context'
 import { parseAlbumUrl } from '../common/spotify-uri'
 import { Album } from './Album'
 import { Tags } from './Tags'
@@ -15,13 +15,13 @@ export function NewEntry(props: NewEntryProps) {
 	const [tagString, setTagString] = useState<string>('')
 	const [url, setUrl] = useState<string>('')
 
-	const { addToCatalogue } = useCatalogueContext()
+	const { addToCatalog } = useCatalogContext()
 
 	function addEntry() {
 
 		if (!album) throw new Error(`Can't add an entry without selecting an album`)
 
-		const entry: Interlude.CatalogueEntry = {
+		const entry: Interlude.CatalogEntry = {
 			addedOn: new Date().toISOString(),
 			data: {
 				artists: album.artists,
@@ -37,7 +37,7 @@ export function NewEntry(props: NewEntryProps) {
 			type: 'album',
 		}
 
-		addToCatalogue(entry)
+		addToCatalog(entry)
 	}
 
 	function parseTags(input: string) {
@@ -83,7 +83,7 @@ export function NewEntry(props: NewEntryProps) {
 						<textarea style={{ height: 50, width: 300 }} value={ notes } onChange={ (e) => setNotes(e.target.value) } />
 					</div>
 
-					<button disabled={ !album } style={{ marginTop: 20 }} onClick={ addEntry }>Add to my catalogue</button>
+					<button disabled={ !album } style={{ marginTop: 20 }} onClick={ addEntry }>Add to my Catalog</button>
 				</div>
 			) }
 		</div>
