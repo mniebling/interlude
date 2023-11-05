@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useCatalogContext } from '../common/Catalog-context'
+import { useCatalogContext } from '../common/catalog-context'
 import { parseAlbumUrl } from '../common/spotify-uri'
 import { Album } from './Album'
 import { Tags } from './Tags'
@@ -67,7 +67,7 @@ export function NewEntry(props: NewEntryProps) {
 	return (
 		<div style={{ background: '#f5f5f5', padding: 10 }}>
 			<label htmlFor='add-box'>Paste a Spotify album link:</label>
-			<input name='add-box' value={ url } style={{ width: '500px' }} onChange={ (e) => setUrl(e.target.value) } />
+			<input id='add-box' value={ url } style={{ width: '500px' }} onChange={ (e) => setUrl(e.target.value) } />
 			<button onClick={ () => getSpotifyInfo(url) }>Get its info</button>
 
 			{ album && <Album album={ album } /> }

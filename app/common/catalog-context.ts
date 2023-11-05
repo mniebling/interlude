@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 
 export interface CatalogContextObject {
-	Catalog: Interlude.Catalog | null
+	catalog: Interlude.Catalog | null
 	addToCatalog: (entry: Interlude.CatalogEntry) => void
 	removeFromCatalog: (key: string) => void
 }

@@ -1,5 +1,5 @@
 export interface CatalogProps {
-	Catalog: Interlude.Catalog
+	catalog: Interlude.Catalog
 }
 
 export function Catalog(props: CatalogProps) {
