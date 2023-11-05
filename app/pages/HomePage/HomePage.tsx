@@ -1,7 +1,7 @@
 // import { CatalogueContext, getLocalCatalogue, writeLocalCatalogue } from '../../common'
 // import { Artists, EmptyCatalogue, Footer, Header, NewEntry, Tags } from '../../components'
 import { Fragment, useEffect, useState } from 'react'
-import { SpotifyTokenResult } from '../../api/spotify-token'
+import { SpotifyTokenResult } from '../../../api/spotify-token'
 
 
 export function HomePage() {

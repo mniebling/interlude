@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { HomePage } from './HomePage'
+import { HomePage } from './pages/HomePage'
 
 
 const container = document.getElementById('root') as HTMLDivElement
