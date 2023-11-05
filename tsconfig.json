@@ -13,9 +13,6 @@
 		"module": "esnext",
 		"moduleResolution": "node",
 		"noEmit": true,
-		"paths": {
-			"@/*": ["./src/*"]
-		},
 		"resolveJsonModule": true,
 		"strict": true,
 		"target": "es2015",
