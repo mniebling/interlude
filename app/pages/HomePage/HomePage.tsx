@@ -1,5 +1,5 @@
 import { SpotifyTokenResult } from '@/api/spotify-token'
-import { CatalogContext, getLocalCatalog } from '@/app/common'
+import { CatalogContext, getLocalCatalog, SpotifyContext, SpotifyContextObject } from '@/app/common'
 import { Header } from '@/app/components'
 import { EmptyCatalog } from '@/app/components/EmptyCatalog'
 import { useEffect, useState } from 'react'
@@ -7,30 +7,36 @@ import { useEffect, useState } from 'react'
 
 export function HomePage() {
 
-	const [authToken, setAuthToken] = useState<string | null>(null)
 	const [catalog, setCatalog] = useState<Interlude.Catalog | null>(null)
+	const [spotify, setSpotify] = useState<SpotifyContextObject | null>(null)
 	// const [showNewEntry, setShowNewEntry] = useState<boolean>(false)
 
 	useEffect(() => {
-		getAuthToken().then(setAuthToken)
+		getAuthToken().then(authToken => setSpotify({ authToken }))
 		setCatalog(getLocalCatalog())
 	}, [])
 
 	async function getAuthToken() {
 
 		const response = await fetch('/api/spotify-token')
+
+		if (!response.ok) throw new Error(`Couldn't retrieve a Spotify auth token.`)
+
 		const result = await response.json() as SpotifyTokenResult
+
 		console.log(`Spotify API token: ${result.token}`)
 		return result.token
 	}
 
-	if (!authToken) return null
+	if (!spotify?.authToken) return null
 
 	return (
-		<CatalogContext.Provider value={{ catalog, addToCatalog, removeFromCatalog }}>
-			<Header />
-			<EmptyCatalog token={ authToken } />
-		</CatalogContext.Provider>
+		<SpotifyContext.Provider value={ spotify }>
+			<CatalogContext.Provider value={{ catalog, addToCatalog, removeFromCatalog }}>
+				<Header />
+				<EmptyCatalog />
+			</CatalogContext.Provider>
+		</SpotifyContext.Provider>
 	)
 
 

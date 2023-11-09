@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { useCatalogContext } from '../common/catalog-context'
-import { parseAlbumUrl } from '../common/spotify-uri'
+import { parseAlbumUrl, useCatalogContext, useSpotifyContext } from '../common'
 import { Album } from './Album'
 import { Tags } from './Tags'
 
-export interface NewEntryProps {
-	token: string // definitely fix this nonsense later
-}
 
-export function NewEntry(props: NewEntryProps) {
+export function NewEntry() {
+
+	const { authToken } = useSpotifyContext()
 
 	const [album, setAlbum] = useState<Spotify.Album>()
 	const [notes, setNotes] = useState<string>('')
@@ -19,7 +17,7 @@ export function NewEntry(props: NewEntryProps) {
 
 	function addEntry() {
 
-		if (!album) throw new Error(`Can't add an entry without selecting an album`)
+		if (!album) throw new Error(`Can't add an entry without selecting an album.`)
 
 		const entry: Interlude.CatalogEntry = {
 			addedOn: new Date().toISOString(),
@@ -55,7 +53,7 @@ export function NewEntry(props: NewEntryProps) {
 		// Move this into server components
 		const response = await fetch(`https://api.spotify.com/v1/albums/${id}`, {
 			headers: {
-				'Authorization': `Bearer ${props.token}`,
+				'Authorization': `Bearer ${authToken}`,
 				'Content-Type': 'application/json',
 			}
 		})
