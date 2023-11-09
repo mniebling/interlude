@@ -13,7 +13,7 @@ export function NewEntry() {
 	const [tagString, setTagString] = useState<string>('')
 	const [url, setUrl] = useState<string>('')
 
-	const { addToCatalog } = useCatalogContext()
+	const { addToCatalog, catalog } = useCatalogContext()
 
 	function addEntry() {
 
@@ -35,9 +35,10 @@ export function NewEntry() {
 			type: 'album',
 		}
 
-		addToCatalog(entry)
+		addToCatalog(catalog, entry)
 	}
 
+	// TODO: Handle empty string
 	function parseTags(input: string) {
 		return input.split(',').map(tag => tag.trim())
 	}

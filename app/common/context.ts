@@ -1,4 +1,5 @@
-import { createContext, useContext } from 'react'
+import { useContext } from 'react'
+import { CatalogContext, SpotifyContext } from '../pages/HomePage'
 
 /**
  * This context is used for managing the entire catalog that has been persisted
@@ -13,16 +14,14 @@ export function useCatalogContext(): CatalogContextObject {
 }
 
 export interface CatalogContextObject {
-	catalog: Interlude.Catalog | null
-	addToCatalog: (entry: Interlude.CatalogEntry) => void
-	removeFromCatalog: (key: string) => void
+	catalog: Interlude.Catalog
+	addToCatalog: (catalog: Interlude.Catalog, entry: Interlude.CatalogEntry) => void
+	removeFromCatalog: (catalog: Interlude.Catalog, key: string) => void
 }
 
-export const CatalogContext = createContext<CatalogContextObject | null>(null)
-
-
 /**
- * This context is used for data relevant to the Spotify API.
+ * This context is used for data related to the Spotify API.
+ * In the future, this could be a service-agnostic context providing auth/user data.
  */
 export function useSpotifyContext(): SpotifyContextObject {
 
@@ -35,5 +34,3 @@ export function useSpotifyContext(): SpotifyContextObject {
 export interface SpotifyContextObject {
 	authToken: string
 }
-
-export const SpotifyContext = createContext<SpotifyContextObject | null>(null)
