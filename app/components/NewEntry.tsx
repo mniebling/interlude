@@ -65,9 +65,11 @@ export function NewEntry() {
 
 	return (
 		<div style={{ background: '#f5f5f5', padding: 10 }}>
-			<label htmlFor='add-box'>Paste a Spotify album link:</label>
-			<input id='add-box' value={ url } style={{ width: '500px' }} onChange={ (e) => setUrl(e.target.value) } />
-			<button onClick={ () => getSpotifyInfo(url) }>Get its info</button>
+			<div style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}>
+				<label htmlFor='add-box'>Paste a Spotify album link:</label>
+				<input id='add-box' value={ url } style={{ margin: '5px 0', maxWidth: '500px', width: '100%' }} onChange={ (e) => setUrl(e.target.value) } />
+				<button onClick={ () => getSpotifyInfo(url) }>Get its info</button>
+			</div>
 
 			{ album && <Album album={ album } /> }
 
