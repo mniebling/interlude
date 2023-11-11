@@ -1,5 +1,5 @@
 import { SpotifyTokenResult } from '@/api/spotify-token'
-import { addToCatalog, CatalogContextObject, getLocalCatalog, removeFromCatalog, SpotifyContextObject } from '@/app/common'
+import { updateCatalog, CatalogContextObject, getLocalCatalog, removeFromCatalog, SpotifyContextObject } from '@/app/common'
 import { Artists, EmptyCatalog, Footer, Header, EditEntry, Tags } from '@/app/components'
 import { createContext, useEffect, useState } from 'react'
 
@@ -10,20 +10,16 @@ export const SpotifyContext = createContext<SpotifyContextObject | null>(null)
 export function HomePage() {
 
 	const [catalog, setCatalog] = useState<Interlude.Catalog>()
+	const [entry, setEntry] = useState<Interlude.CatalogEntry>()
+	const [showEditEntry, setShowEditEntry] = useState<boolean>(false)
 	const [spotify, setSpotify] = useState<SpotifyContextObject>()
 
-	// This is only used once the blank slate disappears; refactor this once we componentize Catalog.
-	const [showNewEntry, setShowNewEntry] = useState<boolean>(false)
 
 	useEffect(() => {
 		getAuthToken().then(authToken => setSpotify({ authToken }))
 		setCatalog(getLocalCatalog())
 	}, [])
 
-	// This is pretty janky, definitely need to improve how we hide the new entry UI.
-	useEffect(() => {
-		setShowNewEntry(false)
-	}, [catalog?.size])
 
 	async function getAuthToken() {
 
@@ -45,7 +41,11 @@ export function HomePage() {
 					catalog,
 					// We need to apply the results of the update functions to local state so they
 					// apply to the provided context value and re-render components. Is this the best way?
-					addToCatalog: (catalog, entry) => setCatalog(addToCatalog(catalog, entry)),
+					addToCatalog: (catalog, entry) => {
+						setCatalog(updateCatalog(catalog, entry))
+						setEntry(undefined)
+						setShowEditEntry(false)
+					},
 					removeFromCatalog: (catalog, key) => setCatalog(removeFromCatalog(catalog, key)),
 				}}>
 				<Header />
@@ -56,15 +56,16 @@ export function HomePage() {
 				{/* This is a naive version of the actual catalog; it should definitely get componentized. */}
 				{ catalog.size > 0 && (
 					<div style={{ marginBottom: 50, padding: 10 }}>
-						<h2>My Catalog <button onClick={ () => setShowNewEntry(true) }>Add an entry</button></h2>
+						<h2>My Catalog <button onClick={ () => setShowEditEntry(true) }>Add an entry</button></h2>
 
-						{ showNewEntry && <EditEntry /> }
+						{ showEditEntry && <EditEntry entry={ entry } /> }
 
 						<ul>
 							{ Array.from(catalog).map(([key, val]) => (
 								<li key={ key } style={{ marginBottom: 20 }}>
 									<div>
 										<span><Artists artists={ val.data.artists } /> — { val.data.name }</span>
+										<button style={{ marginLeft: 5 }} onClick={ () => editEntry(val) }>Edit</button>
 										<button style={{ marginLeft: 5 }} onClick={ () => setCatalog(removeFromCatalog(catalog, key)) }>Remove</button>
 									</div>
 									<Tags tags={ val.tags } />
@@ -79,4 +80,9 @@ export function HomePage() {
 			</CatalogContext.Provider>
 		</SpotifyContext.Provider>
 	)
+
+	function editEntry(entry: Interlude.CatalogEntry) {
+		setShowEditEntry(true)
+		setEntry(entry)
+	}
 }

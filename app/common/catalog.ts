@@ -5,15 +5,12 @@ import { writeLocalCatalog } from './local-storage'
  * Updating an existing entry is currently not supported, so this function errors
  * if you try to do that.
  */
-export function addToCatalog(
+export function updateCatalog(
 	catalog: Interlude.Catalog,
 	entry: Interlude.CatalogEntry,
 ): Interlude.Catalog {
 
-	console.log('Try to add to Catalog', entry)
-
 	if (!catalog) throw new Error(`The Catalog doesn't exist; was it initialized incorrectly?`)
-	if (catalog.get(entry.data.id)) throw new Error(`Already in the Catalog, update is TODO`)
 
 	// Add the new data.
 	const updated = new Map(catalog.set(entry.data.id, entry))
