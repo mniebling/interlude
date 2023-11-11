@@ -7,7 +7,8 @@
 	"scripts": {
 		"build": "vite build",
 		"start": "netlify dev",
-		"test": "vitest"
+		"test": "vitest",
+		"tsc": "tsc"
 	},
 	"repository": {
 		"type": "git",
