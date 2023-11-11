@@ -1,6 +1,6 @@
 import { SpotifyTokenResult } from '@/api/spotify-token'
 import { addToCatalog, CatalogContextObject, getLocalCatalog, removeFromCatalog, SpotifyContextObject } from '@/app/common'
-import { Artists, EmptyCatalog, Footer, Header, NewEntry, Tags } from '@/app/components'
+import { Artists, EmptyCatalog, Footer, Header, EditEntry, Tags } from '@/app/components'
 import { createContext, useEffect, useState } from 'react'
 
 export const CatalogContext = createContext<CatalogContextObject | null>(null)
@@ -58,7 +58,7 @@ export function HomePage() {
 					<div style={{ marginBottom: 50, padding: 10 }}>
 						<h2>My Catalog <button onClick={ () => setShowNewEntry(true) }>Add an entry</button></h2>
 
-						{ showNewEntry && <NewEntry /> }
+						{ showNewEntry && <EditEntry /> }
 
 						<ul>
 							{ Array.from(catalog).map(([key, val]) => (

@@ -4,7 +4,12 @@ import { Album } from './Album'
 import { Tags } from './Tags'
 
 
-export function NewEntry() {
+/**
+ * Renders UI for editing a catalog entry. It allows the user to search for an entry
+ * if no value is provided for `props.entry`. If this value is provided, the user
+ * can edit the existing entry.
+ */
+export function EditEntry(props: { entry?: Interlude.CatalogEntry }) {
 
 	const { authToken } = useSpotifyContext()
 
