@@ -26,15 +26,12 @@ export function EditEntry(props: { entry?: Interlude.CatalogEntry }) {
 		setTagString((props.entry?.tags || []).join(','))
 	}, [props.entry])
 
-	// If entry, show the entry
-	// On submit, submit the entry in state
-
 	function addEntry() {
 
 		if (!album) throw new Error(`Can't add an entry without selecting an album.`)
 
 		const entry: Interlude.CatalogEntry = {
-			addedOn: new Date().toISOString(),
+			addedOn: new Date().toISOString(), // TODO: probably want to keep track of added and updated separately
 			data: album,
 			notes,
 			source: 'spotify',
