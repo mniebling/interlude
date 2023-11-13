@@ -1,22 +1,8 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { updateCatalog } from './catalog'
 
 
 describe('updateCatalog', () => {
-
-	// TODO: decouple these update functions from writing to local storage.
-	// It shouldn't be necessary to mock the persistance layer to test this logic.
-	beforeEach(() => {
-		const localStorageMock = {
-			setItem: () => true,
-		}
-
-		vi.stubGlobal('localStorage', localStorageMock)
-	})
-
-	afterEach(() => {
-		vi.restoreAllMocks()
-	})
 
 	it('should add an entry to a blank catalog', () => {
 
