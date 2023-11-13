@@ -16,9 +16,6 @@ export default defineConfig(({ command, mode }) => ({
 		},
 	},
 	root: './app',
-	server: {
-		hmr: false,
-	},
 	test: {
 		cache: {
 			dir: '../node_modules/.vitest', // https://github.com/vitest-dev/vitest/issues/3272

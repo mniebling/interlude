@@ -1,5 +1,4 @@
-import { useContext } from 'react'
-import { CatalogContext, SpotifyContext } from '../pages/HomePage'
+import { createContext, useContext } from 'react'
 
 /**
  * This context is used for managing the entire catalog that has been persisted
@@ -12,6 +11,8 @@ export function useCatalogContext(): CatalogContextObject {
 
 	return ctx
 }
+
+export const CatalogContext = createContext<CatalogContextObject | null>(null)
 
 export interface CatalogContextObject {
 	catalog: Interlude.Catalog
@@ -30,6 +31,8 @@ export function useSpotifyContext(): SpotifyContextObject {
 
 	return ctx
 }
+
+export const SpotifyContext = createContext<SpotifyContextObject | null>(null)
 
 export interface SpotifyContextObject {
 	authToken: string

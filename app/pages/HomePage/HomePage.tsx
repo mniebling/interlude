@@ -1,10 +1,7 @@
-import { CatalogContextObject, getLocalCatalog, removeFromCatalog, SpotifyContextObject, updateCatalog } from '@/app/common'
+import { CatalogContext, getLocalCatalog, removeFromCatalog, SpotifyContext, SpotifyContextObject, updateCatalog } from '@/app/common'
 import { Artists, EditEntry, EmptyCatalog, Footer, Header, Tags } from '@/app/components'
-import { createContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getAuthToken } from './get-auth-token'
-
-export const CatalogContext = createContext<CatalogContextObject | null>(null)
-export const SpotifyContext = createContext<SpotifyContextObject | null>(null)
 
 
 export function HomePage() {
@@ -14,6 +11,10 @@ export function HomePage() {
 	const [showEditEntry, setShowEditEntry] = useState<boolean>(false)
 	const [spotify, setSpotify] = useState<SpotifyContextObject>()
 
+	// We want to block rendering the app until we have a Spotify token and a catalog.
+	// These are both pretty fast results right now, but we might figure out a way to
+	// make these non-blocking if they become more expensive in the future. For example, once
+	// the catalog is no longer loaded from local storage.
 	useEffect(() => {
 		getAuthToken().then(authToken => setSpotify({ authToken }))
 		setCatalog(getLocalCatalog())
