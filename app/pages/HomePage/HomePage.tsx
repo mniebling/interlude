@@ -1,5 +1,6 @@
 import { getLocalCatalog, removeFromCatalog, SpotifyContext, SpotifyContextObject, updateCatalog, writeLocalCatalog } from '@/app/common'
 import { Artists, EditEntry, EmptyCatalog, Footer, Header, Tags } from '@/app/components'
+import { Button } from '@mui/base'
 import { useEffect, useState } from 'react'
 import { getAuthToken } from './get-auth-token'
 
@@ -70,7 +71,12 @@ export function HomePage() {
 			{/* This is a naive version of the actual catalog; it should definitely get componentized. */}
 			{ catalog.size > 0 && (
 				<div style={{ marginBottom: 50, padding: 10 }}>
-					<h2>My Catalog <button onClick={ () => setShowEditEntry(true) }>Add an entry</button></h2>
+					<h2 style={{ alignItems: 'center', display: 'flex' }}>
+						<span style={{ marginRight: 25 }}>My Catalog</span>
+						<Button onClick={ () => setShowEditEntry(true) }>Add an entry</Button>
+					</h2>
+
+					<hr />
 
 					{ showEditEntry && <EditEntry entry={ entry } /> }
 

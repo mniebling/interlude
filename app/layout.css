@@ -6,3 +6,23 @@ body {
 	font-family: system-ui, sans-serif;
 	margin: 0;
 }
+
+/* TODO: Modularize mui/base custom styles */
+.MuiButton-root {
+	align-items: center;
+	background-color: #636b74;
+	border: none;
+	border-radius: 6px;
+	color: #fff;
+	cursor: pointer;
+	display: inline-flex;
+	font-family: system-ui, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	padding: 4px 12px;
+	transition: background-color 0.25s;
+}
+
+.MuiButton-root:hover {
+	background-color: #555e68;
+}
