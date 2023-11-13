@@ -1,7 +1,7 @@
-import { SpotifyTokenResult } from '@/api/spotify-token'
-import { updateCatalog, CatalogContextObject, getLocalCatalog, removeFromCatalog, SpotifyContextObject } from '@/app/common'
-import { Artists, EmptyCatalog, Footer, Header, EditEntry, Tags } from '@/app/components'
+import { CatalogContextObject, getLocalCatalog, removeFromCatalog, SpotifyContextObject, updateCatalog } from '@/app/common'
+import { Artists, EditEntry, EmptyCatalog, Footer, Header, Tags } from '@/app/components'
 import { createContext, useEffect, useState } from 'react'
+import { getAuthToken } from './get-auth-token'
 
 export const CatalogContext = createContext<CatalogContextObject | null>(null)
 export const SpotifyContext = createContext<SpotifyContextObject | null>(null)
@@ -14,24 +14,10 @@ export function HomePage() {
 	const [showEditEntry, setShowEditEntry] = useState<boolean>(false)
 	const [spotify, setSpotify] = useState<SpotifyContextObject>()
 
-
 	useEffect(() => {
 		getAuthToken().then(authToken => setSpotify({ authToken }))
 		setCatalog(getLocalCatalog())
 	}, [])
-
-
-	async function getAuthToken() {
-
-		const response = await fetch('/api/spotify-token')
-
-		if (!response.ok) throw new Error(`Couldn't retrieve a Spotify auth token.`)
-
-		const result = await response.json() as SpotifyTokenResult
-
-		console.log(`Spotify API token: ${result.token}`)
-		return result.token
-	}
 
 	if (!spotify?.authToken || !catalog) return null
 
