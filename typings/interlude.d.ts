@@ -11,16 +11,4 @@ declare namespace Interlude {
 	}
 
 	type Catalog = Map<string, CatalogEntry>
-
-	// API types
-	interface ApiError {
-		message: string
-	}
-
-	export namespace Events {
-
-		type AddToCatalog = CustomEvent<{
-			entry: Interlude.CatalogEntry
-		}>
-	}
 }
