@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { parseAlbumUrl, useCatalogContext, useSpotifyContext } from '../common'
+import { parseAlbumUrl, useSpotifyContext } from '../common'
 import { Album } from './Album'
 import { Tags } from './Tags'
 
@@ -17,8 +17,6 @@ export function EditEntry(props: { entry?: Interlude.CatalogEntry }) {
 	const [notes, setNotes] = useState<string>('')
 	const [tagString, setTagString] = useState<string>('')
 	const [url, setUrl] = useState<string>('')
-
-	const { addToCatalog, catalog } = useCatalogContext()
 
 	useEffect(() => {
 		setAlbum(props.entry?.data)
@@ -39,7 +37,8 @@ export function EditEntry(props: { entry?: Interlude.CatalogEntry }) {
 			type: 'album',
 		}
 
-		addToCatalog(catalog, entry)
+		// TODO: This can become generic if we need to manage multiple events.
+		window.dispatchEvent(new CustomEvent<Interlude.CatalogEntry>('Interlude:UpdateCatalog', { detail: entry }))
 	}
 
 	// TODO: Handle empty string

@@ -15,11 +15,6 @@ export function updateCatalog(
 	// Add the new data.
 	const updated = new Map(catalog.set(entry.data.id, entry))
 
-	// Persist the new catalog.
-	// Currently this is a synchronous side effect; eventually this would be an async
-	// operation and we should ideally error check it and return the value it returns instead.
-	writeLocalCatalog(updated)
-
 	return updated
 }
 

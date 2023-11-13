@@ -1,4 +1,4 @@
-import { CatalogContext, getLocalCatalog, removeFromCatalog, SpotifyContext, SpotifyContextObject, updateCatalog } from '@/app/common'
+import { CatalogContext, getLocalCatalog, removeFromCatalog, SpotifyContext, SpotifyContextObject, updateCatalog, writeLocalCatalog } from '@/app/common'
 import { Artists, EditEntry, EmptyCatalog, Footer, Header, Tags } from '@/app/components'
 import { useEffect, useState } from 'react'
 import { getAuthToken } from './get-auth-token'
@@ -10,6 +10,28 @@ export function HomePage() {
 	const [entry, setEntry] = useState<Interlude.CatalogEntry>()
 	const [showEditEntry, setShowEditEntry] = useState<boolean>(false)
 	const [spotify, setSpotify] = useState<SpotifyContextObject>()
+
+	// HomePage manages the Catalog state by listening to update events.
+	function updateCatalogListener(event: CustomEvent<Interlude.CatalogEntry>) {
+
+		// Apply the update to the view model.
+		const updated = updateCatalog(catalog || new Map(), event.detail)
+		setCatalog(updated)
+
+		// Persist the new catalog (TODO: roll back the view model if the persist fails).
+		writeLocalCatalog(updated)
+
+		// Hide the edit entry (TODO: decouple this from HomePage state).
+		setShowEditEntry(false)
+	}
+
+	useEffect(() => {
+		window.addEventListener('Interlude:UpdateCatalog', updateCatalogListener, { passive: true })
+
+		return () => {
+			window.removeEventListener('Interlude:UpdateCatalog', updateCatalogListener)
+		}
+	}, [catalog]) // We need to re-attach the listeners so we always have the most recent catalog state.
 
 	// We want to block rendering the app until we have a Spotify token and a catalog.
 	// These are both pretty fast results right now, but we might figure out a way to
@@ -26,13 +48,6 @@ export function HomePage() {
 		<SpotifyContext.Provider value={ spotify }>
 			<CatalogContext.Provider value={{
 					catalog,
-					// We need to apply the results of the update functions to local state so they
-					// apply to the provided context value and re-render components. Is this the best way?
-					addToCatalog: (catalog, entry) => {
-						setCatalog(updateCatalog(catalog, entry))
-						setEntry(undefined)
-						setShowEditEntry(false)
-					},
 					removeFromCatalog: (catalog, key) => setCatalog(removeFromCatalog(catalog, key)),
 				}}>
 				<Header />

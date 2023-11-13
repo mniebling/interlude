@@ -16,7 +16,6 @@ export const CatalogContext = createContext<CatalogContextObject | null>(null)
 
 export interface CatalogContextObject {
 	catalog: Interlude.Catalog
-	addToCatalog: (catalog: Interlude.Catalog, entry: Interlude.CatalogEntry) => void
 	removeFromCatalog: (catalog: Interlude.Catalog, key: string) => void
 }
 
