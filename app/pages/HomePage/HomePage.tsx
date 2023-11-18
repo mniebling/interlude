@@ -1,6 +1,5 @@
 import { getLocalCatalog, removeFromCatalog, SpotifyContext, SpotifyContextObject, updateCatalog, writeLocalCatalog } from '@/app/common'
-import { Artists, EditEntry, EmptyCatalog, Footer, Header, Tags } from '@/app/components'
-import { Button } from '@mui/base'
+import { Catalog, EmptyCatalog, Footer, Header } from '@/app/components'
 import { useEffect, useState } from 'react'
 import { getAuthToken } from './get-auth-token'
 
@@ -8,8 +7,6 @@ import { getAuthToken } from './get-auth-token'
 export function HomePage() {
 
 	const [catalog, setCatalog] = useState<Interlude.Catalog>()
-	const [entry, setEntry] = useState<Interlude.CatalogEntry>()
-	const [showEditEntry, setShowEditEntry] = useState<boolean>(false)
 	const [spotify, setSpotify] = useState<SpotifyContextObject>()
 
 	// HomePage manages the Catalog state by listening to update events.
@@ -22,9 +19,6 @@ export function HomePage() {
 
 		// Persist the new catalog (TODO: roll back the view model if the persist fails).
 		writeLocalCatalog(updated)
-
-		// Hide the edit entry (TODO: decouple this from HomePage state).
-		setShowEditEntry(false)
 	}
 
 	function removeFromCatalogListener(event: CustomEvent<string>) {
@@ -35,9 +29,6 @@ export function HomePage() {
 
 		// Persist the new catalog (TODO: roll back the view model if the persist fails).
 		writeLocalCatalog(updated)
-
-		// Hide the edit entry (TODO: decouple this from HomePage state).
-		setShowEditEntry(false)
 	}
 
 	useEffect(() => {
@@ -68,47 +59,13 @@ export function HomePage() {
 			{/* The blank slate shows instructions and allows the user to add a first entry. */}
 			{ catalog.size === 0 && <EmptyCatalog /> }
 
-			{/* This is a naive version of the actual catalog; it should definitely get componentized. */}
 			{ catalog.size > 0 && (
 				<div style={{ marginBottom: 50, padding: 10 }}>
-					<h2 style={{ alignItems: 'center', display: 'flex' }}>
-						<span style={{ marginRight: 25 }}>My Catalog</span>
-						<Button onClick={ () => setShowEditEntry(true) }>Add an entry</Button>
-					</h2>
-
-					<hr />
-
-					{ showEditEntry && <EditEntry entry={ entry } /> }
-
-					<ul>
-						{ Array.from(catalog).map(([key, val]) => (
-							<li key={ key } style={{ marginBottom: 20 }}>
-								<div>
-									<span><Artists artists={ val.data.artists } /> — { val.data.name }</span>
-									<button style={{ marginLeft: 5 }} onClick={ () => editEntry(val) }>Edit</button>
-									<button style={{ marginLeft: 5 }} onClick={ () => removeEntry(val) }>Remove</button>
-								</div>
-								<Tags tags={ val.tags } />
-								<div style={{ color: '#555', fontSize: '0.9rem', marginTop: 10, maxWidth: 400 }}>{ val.notes }</div>
-							</li>
-						))}
-					</ul>
+					<Catalog catalog={ catalog } />
 				</div>
 			)}
 
 			<Footer />
 		</SpotifyContext.Provider>
 	)
-
-	function editEntry(entry: Interlude.CatalogEntry) {
-		setShowEditEntry(true)
-		setEntry(entry)
-	}
-
-	// TODO: It's silly to dispatch an event and handle it in the same component.
-	// But this functionality will move out of HomePage sooner rather than later.
-	function removeEntry(entry: Interlude.CatalogEntry) {
-		// TODO: This can become generic if we need to manage multiple events.
-		window.dispatchEvent(new CustomEvent<string>('Interlude:RemoveFromCatalog', { detail: entry.data.id }))
-	}
 }
