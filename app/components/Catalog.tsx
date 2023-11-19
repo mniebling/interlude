@@ -1,7 +1,7 @@
 import { Button } from '@mui/base'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Artists } from './Artists'
-import { EditEntry } from './EditEntry'
+import { EditEntryModal, useEditEntryModal } from './EditEntryModal'
 import { Tags } from './Tags'
 
 export interface CatalogProps {
@@ -10,31 +10,28 @@ export interface CatalogProps {
 
 export function Catalog(props: CatalogProps) {
 
-	// These two state objects are only used to manage the edit/add UI.
-	// Should definitely figure out a way to refactor all this into one place and invoke it.
-	const [entry, setEntry] = useState<Interlude.CatalogEntry>()
-	const [showEditEntry, setShowEditEntry] = useState<boolean>(false)
+	const { showEditEntryModal, closeEditEntryModal, openEditEntryModal } = useEditEntryModal()
 
-	useEffect(() => {
-		setShowEditEntry(false)
-	}, [props.catalog])
+	const [entry, setEntry] = useState<Interlude.CatalogEntry>()
 
 	function editEntry(entry: Interlude.CatalogEntry) {
-		setShowEditEntry(true)
 		setEntry(entry)
+		openEditEntryModal()
 	}
 
 	function removeEntry(entry: Interlude.CatalogEntry) {
 		// TODO: This can become generic if we need to manage multiple events.
 		window.dispatchEvent(new CustomEvent<string>('Interlude:RemoveFromCatalog', { detail: entry.data.id }))
+		closeEditEntryModal()
 	}
 
 	return (
 		<Fragment>
-			{ showEditEntry && <EditEntry entry={ entry } /> }
+			{ showEditEntryModal && <EditEntryModal entry={ entry } close={ closeEditEntryModal } /> }
+
 			<h2 style={{ alignItems: 'center', display: 'flex' }}>
 				<span style={{ marginRight: 25 }}>My Catalog</span>
-				<Button onClick={ () => setShowEditEntry(true) }>Add an entry</Button>
+				<Button onClick={ openEditEntryModal }>Add an entry</Button>
 			</h2>
 
 			<hr />

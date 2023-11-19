@@ -3,13 +3,37 @@ import { parseAlbumUrl, useSpotifyContext } from '../common'
 import { Album } from './Album'
 import { Tags } from './Tags'
 
+/**
+ * A hook that provides control of the EditEntryModal's state.
+ */
+export function useEditEntryModal() {
+
+	const [showEditEntryModal, setShowEditEntryModal] = useState<boolean>(false)
+
+	const openEditEntryModal = () => setShowEditEntryModal(true)
+	const closeEditEntryModal = () => setShowEditEntryModal(false)
+
+	return { showEditEntryModal, openEditEntryModal, closeEditEntryModal }
+}
+
+export interface EditEntryModalProps {
+	/** Passing an entry is optional; leave this blank if the user is adding a new entry from scratch. */
+	entry?: Interlude.CatalogEntry
+	/** Pass in the `closeEditEntryModal` function from the consuming component's instance of the `useEditEntryModal` hook. */
+	close: () => void
+}
 
 /**
  * Renders UI for editing a catalog entry. It allows the user to search for an entry
- * if no value is provided for `props.entry`. If this value is provided, the user
- * can edit the existing entry.
+ * if no value is provided for `props.entry`. If this value _is_ provided, the user can edit the existing entry.
+ *
+ * To show the modal, consume `showEditEntryModal` and `openEditEntryModal` from the `useEditEntryModal` hook.
+ * Use `showEditEntryModal` to conditionally render the component and then call `openEditEntryModal` to show it.
+ *
+ * Make sure to pass in the instance of `closeEditEntryModal` from the hook as well so the modal can close itself.
+ * (That's required because hooks share stateful _logic_, but not state itself.)
  */
-export function EditEntry(props: { entry?: Interlude.CatalogEntry }) {
+export function EditEntryModal(props: EditEntryModalProps) {
 
 	const { authToken } = useSpotifyContext()
 
@@ -39,6 +63,8 @@ export function EditEntry(props: { entry?: Interlude.CatalogEntry }) {
 
 		// TODO: This can become generic if we need to manage multiple events.
 		window.dispatchEvent(new CustomEvent<Interlude.CatalogEntry>('Interlude:UpdateCatalog', { detail: entry }))
+
+		props.close()
 	}
 
 	// TODO: Handle empty string
