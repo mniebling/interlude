@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { Button, Input } from '@mui/base'
+import { Fragment, useEffect, useState } from 'react'
 import { parseAlbumUrl, useSpotifyContext } from '../common'
 import { Album } from './Album'
 import { Tags } from './Tags'
@@ -67,8 +68,10 @@ export function EditEntryModal(props: EditEntryModalProps) {
 		props.close()
 	}
 
-	// TODO: Handle empty string
 	function parseTags(input: string) {
+
+		if (input.length === 0) return []
+
 		return input.split(',').map(tag => tag.trim())
 	}
 
@@ -93,33 +96,38 @@ export function EditEntryModal(props: EditEntryModalProps) {
 	}
 
 	return (
-		<div style={{ background: '#f5f5f5', padding: 10 }}>
+		<div style={{ background: 'rgb(255 255 255 / 0.05)', padding: 10 }}>
 
 			{/* If no entry is passed in, we need to do a search to find an album. The entry will be based on that. */}
 			{ !props.entry && (
-				<div style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}>
+				<Fragment>
 					<label htmlFor='add-box'>Paste a Spotify album link:</label>
-					<input id='add-box' value={ url } style={{ margin: '5px 0', maxWidth: '500px', width: '100%' }} onChange={ (e) => setUrl(e.target.value) } />
-					<button onClick={ () => getSpotifyInfo(url) }>Get its info</button>
-				</div>
+					<Input id='add-box' value={ url } style={{ marginBottom: '5px', maxWidth: '500px', width: '100%' }} onChange={ (e) => setUrl(e.target.value) } />
+					<Button onClick={ () => getSpotifyInfo(url) }>Get its info</Button>
+				</Fragment>
 			)}
 
 			{ album && <Album album={ album } /> }
 
 			{ album && (
 				<div>
-					<label>Tags (comma seperated):</label>
-					<input value={ tagString } style={{ width: '300px' }} onChange={ (e) => setTagString(e.target.value) } />
-					<Tags tags={ parseTags(tagString) } />
+					<label htmlFor='tags'>Tags (comma seperated)</label>
+					<Input id='tags' value={ tagString } style={{ width: '300px' }} onChange={ (e) => setTagString(e.target.value) } />
 
-					<div style={{ display: 'flex', marginTop: 10 }}>
-						<label>Notes:</label>
-						<textarea style={{ height: 50, width: 300 }} value={ notes } onChange={ (e) => setNotes(e.target.value) } />
-					</div>
+					<Tags style={{ margin: '4px 0 8px 0' }} tags={ parseTags(tagString) } />
 
-					<button disabled={ !album } style={{ marginTop: 20 }} onClick={ addEntry }>
+					<label htmlFor='notes'>Notes</label>
+					<Input
+						id='notes'
+						multiline
+						onChange={ (e) => setNotes(e.target.value) }
+						style={{ height: 50, width: 300 }}
+						value={ notes }
+					/>
+
+					<Button disabled={ !album } style={{ marginTop: 20 }} onClick={ addEntry }>
 						{ props.entry ? 'Update my Catalog' : 'Add to my Catalog' }
-					</button>
+					</Button>
 				</div>
 			) }
 		</div>

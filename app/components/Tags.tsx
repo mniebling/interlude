@@ -1,19 +1,20 @@
 import { Fragment } from 'react'
+import css from './Tags.module.css'
 
 export interface TagsProps {
+	style?: React.CSSProperties
 	tags: string[]
 }
 
 export function Tags(props: TagsProps) {
 
-	const SEPARATOR_SPACING = 6
+	const SEPARATOR_SPACING = 4
 
 	return (
-		<div style={{ color: '#999' }}>
+		<div style={ props.style }>
 			{ props.tags.map((tag, i) => (
 				<Fragment key={ i }>
-					{ (i > 0) && <span style={{ marginRight: SEPARATOR_SPACING }}>•</span> }
-					<span style={{ marginRight: SEPARATOR_SPACING }}>{ tag }</span>
+					<span className={ css.tag } style={{ marginRight: SEPARATOR_SPACING }}>{ tag }</span>
 				</Fragment>
 			))}
 		</div>

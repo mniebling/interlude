@@ -16,7 +16,7 @@ export function Album(props: AlbumProps) {
 				<div>
 					<div><strong><Artists artists={ props.album.artists } /></strong></div>
 					<div>{ props.album.name }</div>
-					<div style={{ color: '#999', marginTop: 5 }}><em>{ props.album.release_date }</em></div>
+					<div style={{ color: '#999' }}>{ props.album.release_date }</div>
 				</div>
 			</div>
 		</div>

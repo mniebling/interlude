@@ -34,15 +34,13 @@ export function Catalog(props: CatalogProps) {
 				<Button onClick={ openEditEntryModal }>Add an entry</Button>
 			</h2>
 
-			<hr />
-
-			<ul>
+			<ul style={{ borderTop: '1px solid var(--color-subtle)', paddingTop: '20px' }}>
 				{ Array.from(props.catalog).map(([key, val]) => (
 					<li key={ key } style={{ marginBottom: 20 }}>
 						<div>
 							<span><Artists artists={ val.data.artists } /> — { val.data.name }</span>
-							<button style={{ marginLeft: 5 }} onClick={ () => editEntry(val) }>Edit</button>
-							<button style={{ marginLeft: 5 }} onClick={ () => removeEntry(val) }>Remove</button>
+							<Button style={{ marginLeft: 15 }} onClick={ () => editEntry(val) }>Edit</Button>
+							<Button style={{ marginLeft: 5 }} onClick={ () => removeEntry(val) }>Remove</Button>
 						</div>
 						<Tags tags={ val.tags } />
 						<div style={{ color: '#555', fontSize: '0.9rem', marginTop: 10, maxWidth: 400 }}>{ val.notes }</div>
