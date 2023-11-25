@@ -1,7 +1,8 @@
 import { getLocalCatalog, removeFromCatalog, SpotifyContext, SpotifyContextObject, updateCatalog, writeLocalCatalog } from '@/app/common'
-import { Catalog, EmptyCatalog, Footer, Header } from '@/app/components'
+import { Catalog, EmptyCatalog, Footer } from '@/app/components'
 import { useEffect, useState } from 'react'
 import { getAuthToken } from './get-auth-token'
+import css from './HomePage.module.css'
 
 
 export function HomePage() {
@@ -52,20 +53,23 @@ export function HomePage() {
 
 	if (!spotify?.authToken || !catalog) return null
 
+	// TODO: A lot of this should be in an app wrapper, and home page is just one
+	// possible child route under that wrapper. Refactor this when adding a 2nd route.
 	return (
 		<SpotifyContext.Provider value={ spotify }>
-			<Header />
+			<div className={ css.layout }>
+				{/* The blank slate shows instructions and allows the user to add a first entry. */}
+				{ catalog.size === 0 && <EmptyCatalog /> }
 
-			{/* The blank slate shows instructions and allows the user to add a first entry. */}
-			{ catalog.size === 0 && <EmptyCatalog /> }
+				{ catalog.size > 0 && (
+					<div style={{ marginBottom: 50, padding: 10 }}>
+						<Catalog catalog={ catalog } />
+					</div>
+				)}
 
-			{ catalog.size > 0 && (
-				<div style={{ marginBottom: 50, padding: 10 }}>
-					<Catalog catalog={ catalog } />
-				</div>
-			)}
+				<Footer />
 
-			<Footer />
+			</div>
 		</SpotifyContext.Provider>
 	)
 }

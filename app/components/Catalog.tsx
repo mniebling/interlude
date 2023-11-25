@@ -29,10 +29,8 @@ export function Catalog(props: CatalogProps) {
 		<Fragment>
 			{ showEditEntryModal && <EditEntryModal entry={ entry } close={ closeEditEntryModal } /> }
 
-			<h2 style={{ alignItems: 'center', display: 'flex' }}>
-				<span style={{ marginRight: 25 }}>My Catalog</span>
-				<Button onClick={ openEditEntryModal }>Add an entry</Button>
-			</h2>
+			<h1>My Catalog</h1>
+			<Button onClick={ openEditEntryModal }>Add an entry</Button>
 
 			<ul style={{ borderTop: '1px solid var(--color-subtle)', paddingTop: '20px' }}>
 				{ Array.from(props.catalog).map(([key, val]) => (

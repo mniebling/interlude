@@ -9,7 +9,7 @@ export default defineConfig(({ command, mode }) => ({
 	},
 	css: {
 		modules: {
-			generateScopedName: function (name, filename) {
+			generateScopedName(name, filename) {
 				const file = basename(filename, '.css').replace('.module', '')
 				return `${file}-${name}`
 			},
