@@ -1,0 +1,30 @@
+.entryList {
+	/* border-top: 1px solid var(--color-subtle); */
+	list-style-type: none;
+	margin: 0;
+	padding: 20px 0 0 0;
+}
+
+.entry {
+	background: var(--color-bg-elevation-1);
+	border-bottom: 1px solid #000;
+	display: flex;
+	padding: 8px 14px;
+}
+
+.artists {
+	color: var(--color-text-secondary);
+}
+
+.title {
+	flex-basis: 25%;
+}
+
+.tags {
+	/* empty */
+}
+
+.actions {
+	align-self: center;
+	margin-left: auto;
+}

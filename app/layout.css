@@ -4,13 +4,19 @@
 
 html {
 	--color-accent: #efa262;
+
+	--color-bg-elevation-0: #212121;
+	--color-bg-elevation-1: #252a2d;
+
 	--color-text-primary: #ebedee;
+	--color-text-secondary: #919ca1;
+
 	--color-subtle: #3f3f46;
 	--line-height-base: 1.5;
 }
 
 body {
-	background: #1e1f23;
+	background: var(--color-bg-elevation-0);
 	color: var(--color-text-primary);
 	font-family: system-ui, sans-serif;
 	margin: 0;
