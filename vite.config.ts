@@ -10,7 +10,9 @@ export default defineConfig(({ command, mode }) => ({
 	css: {
 		modules: {
 			generateScopedName(name, filename) {
-				const file = basename(filename, '.css').replace('.module', '')
+				const file = basename(filename, '.css')
+					.replace('.module', '') // in dev this matches the local filename
+					.replace('.css?used', '') // in prod, the filenames are different
 				return `${file}-${name}`
 			},
 		},
