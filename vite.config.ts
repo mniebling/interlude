@@ -1,11 +1,19 @@
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import { basename, resolve } from 'path'
 import { defineConfig } from 'vite'
 
 
 export default defineConfig(({ command, mode }) => ({
 	build: {
 		outDir: '../dist', // this is relative to root
+	},
+	css: {
+		modules: {
+			generateScopedName: function (name, filename) {
+				const file = basename(filename, '.css').replace('.module', '')
+				return `${file}-${name}`
+			},
+		},
 	},
 	plugins: [
 		react(),
