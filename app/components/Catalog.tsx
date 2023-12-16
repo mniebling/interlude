@@ -20,12 +20,6 @@ export function Catalog(props: CatalogProps) {
 		openEditEntryModal()
 	}
 
-	function removeEntry(entry: Interlude.CatalogEntry) {
-		// TODO: This can become generic if we need to manage multiple events.
-		window.dispatchEvent(new CustomEvent<string>('Interlude:RemoveFromCatalog', { detail: entry.data.id }))
-		closeEditEntryModal()
-	}
-
 	return (
 		<Fragment>
 			{ showEditEntryModal && <EditEntryModal entry={ entry } close={ closeEditEntryModal } /> }
@@ -45,7 +39,6 @@ export function Catalog(props: CatalogProps) {
 						</div>
 						<div className={ css.actions }>
 							<Button style={{ marginLeft: 15 }} onClick={ () => editEntry(val) }>Edit</Button>
-							<Button style={{ marginLeft: 5 }} onClick={ () => removeEntry(val) }>Remove</Button>
 						</div>
 					</li>
 				))}

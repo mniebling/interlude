@@ -68,6 +68,13 @@ export function EditEntryModal(props: EditEntryModalProps) {
 		props.close()
 	}
 
+	function removeEntry() {
+		// TODO: This can become generic if we need to manage multiple events.
+		window.dispatchEvent(new CustomEvent<string>('Interlude:RemoveFromCatalog', { detail: props.entry?.data.id }))
+
+		props.close()
+	}
+
 	function parseTags(input: string) {
 
 		if (input.length === 0) return []
@@ -125,9 +132,16 @@ export function EditEntryModal(props: EditEntryModalProps) {
 						value={ notes }
 					/>
 
-					<Button disabled={ !album } style={{ marginTop: 20 }} onClick={ addEntry }>
+					<Button disabled={ !album } style={{ marginTop: 20, marginRight: 5 }} onClick={ addEntry }>
 						{ props.entry ? 'Update my Catalog' : 'Add to my Catalog' }
 					</Button>
+
+					{ props.entry && (
+						<Button
+							slotProps={{ root: { className: 'isDangerous' } }}
+							onClick={ removeEntry }
+						>Remove this entry</Button>
+					)}
 				</div>
 			) }
 		</div>

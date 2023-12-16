@@ -41,11 +41,26 @@ label {
 	font-size: 14px;
 	line-height: var(--line-height-base);
 	padding: 4px 12px;
-	transition: background-color 0.25s;
+	transition: all 0.25s;
+
+	&:hover {
+		background-color: #525a63;
+	}
 }
 
-.MuiButton-root:hover {
-	background-color: #525a63;
+/* Dangerous buttons are red, and slightly less prominent than normal buttons. */
+.MuiButton-root.isDangerous {
+	background-color: transparent;
+	color: #ef6861;
+
+	&:hover {
+		background-color: rgba(239, 104, 97, 0.16); /* TODO: modularize colors */
+	}
+
+	&:before {
+		content: '⛔'; /* TODO: replace with SVG */
+		margin-right: 5px;
+	}
 }
 
 .MuiInput-input {
@@ -58,12 +73,12 @@ label {
 	padding: 8px 12px;
 	transition: 0.25s all;
 	width: 100%; /* I think we want the input to always match width of the root and then style the root */
-}
 
-.MuiInput-input:focus {
-	border-color: #5f5f68;
-}
+	&:focus {
+		border-color: #5f5f68;
+	}
 
-.MuiInput-input:focus-visible {
-	outline: none;
+	&:focus-visible {
+		outline: none;
+	}
 }
